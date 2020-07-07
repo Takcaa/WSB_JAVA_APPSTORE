@@ -8,7 +8,8 @@ public class Main {
 	// write your code here a
     LocalDate today = LocalDate.now();
 
-    Client klient1 = new Client("Maciek", 1);
+    Client klient1 = new Client("Maciek");
     Project appstore = new Project(klient1,today);
+        System.out.println(appstore);
     }
 }
