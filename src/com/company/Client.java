@@ -52,20 +52,21 @@ public class Client {
 
     public Client(String name) {
         this.name = name;
-        this.type = ThreadLocalRandom.current().nextInt(1, 3+1);;
-        if(this.type == 1){//chill
+        this.type = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        ;
+        if (this.type == 1) {//chill
             this.invoiceDelayChance = 30;
             this.delayPenaltyChance = 20;
             this.breakContactChance = 0;
             this.notPaid = 0;
         }
-        if(this.type == 2){//wymagajacy
+        if (this.type == 2) {//wymagajacy
             this.invoiceDelayChance = 0;
             this.delayPenaltyChance = 0;
             this.breakContactChance = 50;
             this.notPaid = 0;
         }
-        if(this.type == 3){ //skrw
+        if (this.type == 3) { //skrw
             this.invoiceDelayChance = 30;
             this.delayPenaltyChance = 20;
             this.breakContactChance = 100;
