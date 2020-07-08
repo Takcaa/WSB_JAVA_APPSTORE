@@ -1,8 +1,8 @@
-package com.company;
+package com.company.employees;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class subcontractor {
+public class Subcontractor extends Employee {
     private int type;
     private double mistakeChance;
     private double cost;
@@ -24,7 +24,7 @@ public class subcontractor {
         return possibleDelay;
     }
 
-    public subcontractor(int type) {
+    public Subcontractor(int type) {
         this.type = type;
         this.cost = 10 * (type + 1) * 10;
         this.possibleDelay = 0;

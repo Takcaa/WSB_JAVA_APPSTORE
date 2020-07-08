@@ -16,12 +16,14 @@ public class Project {
     private LocalDate deadline;
     private double penalty;
     private double price;
+    private boolean tested;
     private int invoiceDate;  // ilosc dni miedzy oddaniem projektu a zaplata
 
 
     public Project(Client newClient, LocalDate currentTime) {
         this.projClient = newClient;
         this.name = "Projekt " + ThreadLocalRandom.current().nextInt(0, 16 + 1);
+        this.tested = false;
         this.level = ThreadLocalRandom.current().nextInt(1, 3 + 1);
         technologiesList = new ArrayList<Technology>();
         for (int i = 0; i <= this.level; i++) {
@@ -93,17 +95,25 @@ public class Project {
         this.invoiceDate = invoiceDate;
     }
 
+    public boolean isTested() {
+        return tested;
+    }
+
+    public void setTested(boolean tested) {
+        this.tested = tested;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
                 "name='" + name + '\'' +
                 ", level=" + level +
-                ", technologiesList=" + technologiesList +
+               /* ", technologiesList=" + technologiesList +
                 ", projClient=" + projClient +
                 ", deadline=" + deadline +
                 ", penalty=" + penalty +
                 ", price=" + price +
-                ", invoiceDate=" + invoiceDate +
+                ", invoiceDate=" + invoiceDate +*/
                 '}';
     }
 }
