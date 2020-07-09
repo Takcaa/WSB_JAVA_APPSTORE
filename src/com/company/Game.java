@@ -15,8 +15,10 @@ public class Game {
     public int traderWorkDays;
     public int projectSearchingDays;
     public List<Employee> employeeList;
+    public List<Employee> candidateEmployeeList;
     public List<Project> availableProjectList;
     public List<Project> workingOnProjectList;
+    public List<Project> completedProjectList;
     public List<Client> clientList;
 
     public Game(double budget, LocalDate startDate) {
@@ -24,8 +26,10 @@ public class Game {
         this.daysInZUS = 0;
         this.projectSearchingDays = 0;
         this.employeeList = new ArrayList<>();
+        this.candidateEmployeeList = new ArrayList<>();
         this.availableProjectList = new ArrayList<>();
         this.workingOnProjectList = new ArrayList<>();
+        this.completedProjectList = new ArrayList<>();
         this.clientList = new ArrayList<>();
         //Initialize start projects set and clients for projects
         for (int i = 0; i < 3; i++) {
@@ -43,7 +47,7 @@ public class Game {
         clientList.add(new Client("Maciek"));
     }
 
-    public void doTesting(int index){
+    public void doTesting(int index) {
         workingOnProjectList.get(index).setTested(true);
     }
 
@@ -59,7 +63,35 @@ public class Game {
         }
     }
 
-    public void deliverProjectToClient(int index){
+    public boolean showWorkingOnProjects() {
+        if (workingOnProjectList.isEmpty()) {
+            System.out.println("Brak projektow");
+            return false;
+        } else {
+            int i = 0;
+            for (Project proj : workingOnProjectList) {
+                i++;
+                System.out.println(i + ". " + proj);
+            }
+            return true;
+        }
+    }
+
+    public boolean showCompletedProjects() {
+        if (completedProjectList.isEmpty()) {
+            System.out.println("Brak projektow");
+            return false;
+        } else {
+            int i = 0;
+            for (Project proj : completedProjectList) {
+                i++;
+                System.out.println(i + ". " + proj);
+            }
+            return true;
+        }
+    }
+
+    public void deliverProjectToClient(int index) {
 
     }
 
@@ -81,19 +113,28 @@ public class Game {
         }
     }
 
-    public void pickAvailableProject(int index) {
-        workingOnProjectList.add(availableProjectList.get(index));
-        availableProjectList.remove(index);
+    public boolean pickAvailableProject(int index) {
+        if (availableProjectList.get(index).level > 2 && employeeList.isEmpty()) {
+            System.out.println("Nie masz pracownikow wiec nie mozesz podjac sie zlecenia lvl 3");
+            return false;
+        } else {
+            workingOnProjectList.add(availableProjectList.get(index));
+            availableProjectList.remove(index);
+            return true;
+        }
+
     }
 
     public void goToZUS() {
         daysInZUS++;
+        System.out.println("Dni poswiecone na ZUS: " + daysInZUS);
     }
-    public void traderGoWork(){
+
+    public void traderGoWork() {
         traderWorkDays++;
-        if (traderWorkDays == 5){
+        if (traderWorkDays == 5) {
             addClient();
-            traderWorkDays=0;
+            traderWorkDays = 0;
         }
     }
 
@@ -107,24 +148,31 @@ public class Game {
 
     public void lookForProjects(LocalDate today) {
         projectSearchingDays++;
-        if (projectSearchingDays == 5){
-            projectSearchingDays =0;
+        if (projectSearchingDays == 5) {
+            projectSearchingDays = 0;
             addAvilableProject(today);
+            System.out.println("Znalazles nowy projekt!");
+        } else {
+            System.out.println("Dni do nastepnego projektu " + projectSearchingDays + "/5");
         }
     }
 
-    public void hireTester(){
+    public void hireTester() {
         employeeList.add(new Tester());
     }
-    public void hireProgrammer(){
+
+    public void hireProgrammer() {
         employeeList.add(new Programmer());
     }
-    public void hireTrader(){
+
+    public void hireTrader() {
         employeeList.add(new Trader());
     }
-    public void fireEmployee(int index){
+
+    public void fireEmployee(int index) {
         employeeList.remove(index);
     }
+
     @Override
     public String toString() {
         return "Game{" +
@@ -135,4 +183,17 @@ public class Game {
                 // ", clientList=" + clientList +
                 '}';
     }
+
+    public void writeMenu(LocalDate today) {
+        System.out.println("Data: " + today + " " + today.getDayOfWeek());
+        System.out.println("1. Podpisz umowe na realizacje nowego projektu");
+        System.out.println("2. Szukaj klientów");
+        System.out.println("3. Programuj");
+        System.out.println("4. Testuj kod");
+        System.out.println("5. Oddaj gotowy projekt");
+        System.out.println("6. Zatrudnij nowego pracownika");
+        System.out.println("7. Zwolnij pracownika");
+        System.out.println("8. Odwiedz ZUS");
+    }
+
 }
