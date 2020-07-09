@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.employees.Programmer;
+import com.company.employees.Tester;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class Main {
              today.isAfter(startDate.minusDays(10)) && nstop;
              today = today.plusDays(1)) {
 
-            System.out.println(today);
+
             if(!choiceExecuted){
                 today = today.minusDays(1);
             }
@@ -54,9 +55,27 @@ public class Main {
             } else if (choice.equals("5")) {
 
             } else if (choice.equals("6")) {
-
+                System.out.println("Wybierz pracownika do zatrudnienia:");
+                game.showEmpolyees(game.candidateEmployeeList);
+                try {                               // lapanie spacji w input
+                    choice = inStream.readLine();
+                    game.hireEmployee(Integer.parseInt(choice)-1);
+                }
+                catch (Exception e){
+                    choice = " ";
+                }
+                choiceExecuted = true;
             } else if (choice.equals("7")) {
-
+                System.out.println("Wybierz pracownika do zwolnienia:");
+                game.showEmpolyees(game.employeeList);
+                try {                               // lapanie spacji w input
+                    choice = inStream.readLine();
+                    game.fireEmployee(Integer.parseInt(choice)-1);
+                }
+                catch (Exception e){
+                    choice = " ";
+                }
+                choiceExecuted = true;
             } else if (choice.equals("8")) {
                 game.goToZUS();
                 choiceExecuted = true;

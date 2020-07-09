@@ -32,9 +32,13 @@ public class Game {
         this.completedProjectList = new ArrayList<>();
         this.clientList = new ArrayList<>();
         //Initialize start projects set and clients for projects
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             addClient();
             addAvilableProject(startDate);
+            addAvilableProject(startDate);
+            this.candidateEmployeeList.add(new Tester());
+            this.candidateEmployeeList.add(new Programmer());
+            this.candidateEmployeeList.add(new Trader());
         }
 
     }
@@ -55,11 +59,28 @@ public class Game {
         int i = 0; //technologies iterator
         boolean lookForTechnology = true;
         while (lookForTechnology) {
-            if (availableProjectList.get(index).technologiesList.get(i).days != 0
-                    && availableProjectList.get(index).technologiesList.get(i).techName != "mobile") {
+            if (i > availableProjectList.get(index).technologiesList.size()
+                && availableProjectList.get(index).technologiesList.get(i).days != 0
+                && availableProjectList.get(index).technologiesList.get(i).techName != "mobile") {
+
                 availableProjectList.get(index).technologiesList.get(i).days -= 1;
                 lookForTechnology = false;
             }
+            i++;
+        }
+    }
+    public void doProgrammingByEmployee(int index) {
+        int i = 0; //technologies iterator
+        boolean lookForTechnology = true;
+        while (lookForTechnology) {
+            if (i > availableProjectList.get(index).technologiesList.size()
+                    && availableProjectList.get(index).technologiesList.get(i).days != 0
+                    && availableProjectList.get(index).technologiesList.get(i).techName != "mobile") {
+
+                availableProjectList.get(index).technologiesList.get(i).days -= 1;
+                lookForTechnology = false;
+            }
+            i++;
         }
     }
 
@@ -88,6 +109,15 @@ public class Game {
                 System.out.println(i + ". " + proj);
             }
             return true;
+        }
+    }
+
+    public void showEmpolyees(List<Employee> list){
+        if(list.size()<1){
+            System.out.println("Brak pracowników. Kliknij aby kontynuowac");
+        }
+        for (int i =0; i <list.size(); i++){
+            System.out.println(i+1 +"." + list.get(i));
         }
     }
 
@@ -157,20 +187,26 @@ public class Game {
         }
     }
 
-    public void hireTester() {
-        employeeList.add(new Tester());
+    public void hireEmployee(int index) {
+        employeeList.add(candidateEmployeeList.get(index));
+        candidateEmployeeList.remove(index);
     }
-
+/*
     public void hireProgrammer() {
         employeeList.add(new Programmer());
     }
 
     public void hireTrader() {
         employeeList.add(new Trader());
-    }
+    }*/
 
     public void fireEmployee(int index) {
+        budget -= employeeList.get(index).salary * 0.3;
         employeeList.remove(index);
+
+    }
+    void checkIfDone(){
+
     }
 
     @Override

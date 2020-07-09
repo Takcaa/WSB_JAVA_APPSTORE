@@ -19,4 +19,13 @@ public class Trader extends Employee {
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Trader{" +
+                "searchingDays=" + searchingDays +
+                ", salary=" + salary +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
