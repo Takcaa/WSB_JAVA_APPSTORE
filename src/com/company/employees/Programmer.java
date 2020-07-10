@@ -38,7 +38,7 @@ public class Programmer extends Employee {
     @Override
     public String toString() {
         return "Programmer{" +
-                "Salary=" + salary + " "+
+                "Salary=" + salary + " " +
                 "technologiesList=" + technologiesList +
                 '}';
     }

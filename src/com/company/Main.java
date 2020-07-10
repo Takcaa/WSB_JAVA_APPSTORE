@@ -18,12 +18,16 @@ public class Main {
         boolean choiceExecuted = false;
         String choice;
 
+        ////
+
+
+        ////
         for (LocalDate today = startDate;
              today.isAfter(startDate.minusDays(10)) && nstop;
              today = today.plusDays(1)) {
 
 
-            if(!choiceExecuted){
+            if (!choiceExecuted) {
                 today = today.minusDays(1);
             }
             game.writeMenu(today);
@@ -40,28 +44,37 @@ public class Main {
                 game.lookForProjects(today);
                 choiceExecuted = true;
             } else if (choice.equals("3")) {
-                if(choiceExecuted = game.showWorkingOnProjects()){
+                if (choiceExecuted = game.showWorkingOnProjects()) {
                     System.out.println("Wybierz projekt:");
                     choice = inStream.readLine();
                     game.doProgramming(Integer.parseInt(choice) - 1);
                 }
 
             } else if (choice.equals("4")) {
-                if(choiceExecuted = game.showCompletedProjects()){
+                if (choiceExecuted = game.showCompletedProjects()) {
                     System.out.println("Wybierz projekt do testowania:");
                     choice = inStream.readLine();
-                    game.doProgramming(Integer.parseInt(choice) - 1);
+                    game.doTesting(Integer.parseInt(choice) - 1);
                 }
             } else if (choice.equals("5")) {
+                System.out.println("Wybierz projekt do oddania:");
+                game.showCompletedProjects();
+                try {
+                    choice = inStream.readLine();
+                    game.deliverProjectToClient(Integer.parseInt(choice) - 1, today);
+                    choiceExecuted = true;
+                } catch (Exception e) {
+                    choice = " ";
+                }
 
             } else if (choice.equals("6")) {
                 System.out.println("Wybierz pracownika do zatrudnienia:");
                 game.showEmpolyees(game.candidateEmployeeList);
                 try {                               // lapanie spacji w input
                     choice = inStream.readLine();
-                    game.hireEmployee(Integer.parseInt(choice)-1);
-                }
-                catch (Exception e){
+                    game.hireEmployee(Integer.parseInt(choice) - 1);
+                    choiceExecuted = true;
+                } catch (Exception e) {
                     choice = " ";
                 }
                 choiceExecuted = true;
@@ -70,18 +83,21 @@ public class Main {
                 game.showEmpolyees(game.employeeList);
                 try {                               // lapanie spacji w input
                     choice = inStream.readLine();
-                    game.fireEmployee(Integer.parseInt(choice)-1);
-                }
-                catch (Exception e){
+                    game.fireEmployee(Integer.parseInt(choice) - 1);
+                    choiceExecuted = true;
+                } catch (Exception e) {
                     choice = " ";
                 }
                 choiceExecuted = true;
             } else if (choice.equals("8")) {
-                game.goToZUS();
+                game.goToZUS(today);
                 choiceExecuted = true;
             }
 
-
+            game.employeesDoWork(today);
+            if (!game.isOk(today)) {
+                break;
+            }
 
         }
     }
